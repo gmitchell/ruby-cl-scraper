@@ -21,11 +21,15 @@ cities.each do |city|
 
     parsed_content.css('.content').css('.result-row').each do |row|
       title        = row.css('.hdrlnk').inner_text
-      link         = row.css('.hdrlnk').first.attributes["href"].value
       posted_at    = row.css('time').first.attributes["datetime"].value
       price        = row.css('.result-meta').css('.result-price').inner_text
       neighborhood = row.css('.result-meta').css('.result-hood').inner_text
-
+      
+      if row.css('.hdrlnk').first.attributes["href"].value[0] == '/'
+        link       = "https://#{city}.craigslist.org" + row.css('.hdrlnk').first.attributes["href"]
+      else link  = row.css('.hdrlnk').first.attributes["href"]
+      end
+      
       puts "Title: #{title} - #{neighborhood}"
       puts "Price: #{price}"
       puts "Posted at #{posted_at}"
