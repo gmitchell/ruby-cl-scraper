@@ -27,7 +27,7 @@ cities.each do |city|
       
       if row.css('.hdrlnk').first.attributes["href"].value[0] == '/'
         link       = "https://#{city}.craigslist.org" + row.css('.hdrlnk').first.attributes["href"]
-      else link  = row.css('.hdrlnk').first.attributes["href"]
+      else link    = row.css('.hdrlnk').first.attributes["href"]
       end
       
       puts "Title: #{title} - #{neighborhood}"
