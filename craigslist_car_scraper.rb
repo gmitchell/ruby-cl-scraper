@@ -1,12 +1,11 @@
+require_relative 'listing'
+
 require 'open-uri'
 require 'nokogiri'
 require "uri"
 
-
-  cities = ['orlando', 'tampa']
-  makes   = ['honda', 'toyota', 'mini']
-
-
+  cities = ['orlando']
+  makes   = ['honda']
 
   #take a URL, open and parse
   def parse(page)
@@ -21,16 +20,31 @@ require "uri"
       @price        = row.css('.result-meta').css('.result-price').inner_text
       @neighborhood = row.css('.result-meta').css('.result-hood').inner_text
       @link         = row.css('.hdrlnk')[0].attributes.to_a[0][1].to_s
+      @id           = @link.split('/')[-1][0...-5]
 
-      p @title, @posted_at, @price, @neighborhood, @link
+      options = {
+        title: @title,
+        posted_at: @posted_at,
+        price: @price,
+        neighborhood: @neighborhood,
+        link: @link,
+        id: @id
+      }
+
+      #  p @title, @posted_at, @price, @neighborhood, @link, @id
+       listing = Listing.new(options)
+       listing.save
     end
   end
 
   cities.each { |city|
     makes.each { |make|
-      url = "https://#{city}.craigslist.org/search/cta?search_distance=75&postal=32801&min_price=1000&max_price=2500&auto_make_model=#{make}&min_auto_year=2008&max_auto_year=2014&min_auto_miles=10&max_auto_miles=120000&auto_title_status=1"
+      url = "https://#{city}.craigslist.org/search/cta?min_price=1000&max_price=2500&auto_make_model=#{make}&min_auto_year=2008&max_auto_year=2014&min_auto_miles=10&max_auto_miles=120000&auto_title_status=1"
+      # p url
       parse(url)
     }
   }
 
+  finding = Listing.new
+  p finding.find('101')
 
