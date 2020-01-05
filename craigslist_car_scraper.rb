@@ -5,7 +5,7 @@ require 'nokogiri'
 require "uri"
 
   cities = ['orlando']
-  makes   = ['honda']
+  makes   = ['honda', 'toyota', 'hyundai', 'scion']
 
   #take a URL, open and parse
   def parse(page)
@@ -45,6 +45,6 @@ require "uri"
     }
   }
 
-  finding = Listing.new
-  p finding.find('101')
+  # finding = Listing.new
+  # p finding.find('101')
 

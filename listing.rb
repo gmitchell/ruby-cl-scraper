@@ -22,18 +22,24 @@ class Listing
   end
 
   def save
-    if @id == nil
+    if find(@id) == nil
       insert_record
     else
-      update_record
     end
-
-    # p @title, @posted_at, @price, @neighborhood, @link, @id
   end
 
   private
 
   def insert_record
+    db = PG.connect(dbname: 'clscrapes', user: 'cls', password: 'clscraper')
+    results = db.exec_params("INSERT INTO car_listings (id, title, posted_at, price, hood, link) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
+    [@id,
+    @title,
+    @posted_at,
+    @price,
+    @neighborhood,
+    @link])
+    p results
   end
 
   def update_record
