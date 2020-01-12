@@ -5,7 +5,7 @@ require 'nokogiri'
 require "uri"
 
   cities = ['orlando']
-  makes   = ['honda', 'toyota', 'hyundai', 'scion']
+  makes   = ['honda', 'toyota', 'hyundai', 'scion', 'nissan']
 
   #take a URL, open and parse
   def parse(page)
